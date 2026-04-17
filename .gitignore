@@ -1,0 +1,18 @@
+├── dns_server.py
+├── docker-compose.yml
+├── Dockerfile
+├── Dockerfile-mongo
+├── ldap
+│   ├── acl-svc.ldif
+│   ├── bootstrap.ldif
+│   ├── ldap-loglevel.ldif
+│   ├── ldap-max-pending-10.ldif
+│   ├── ldap-max-pending-add.ldif
+│   └── ldap-max-pending.ldif
+├── mongo-init.js
+├── mongo-init.sh
+├── mongod.conf
+└── secrets
+    └── mongodb-keyfile
+
+3 directories, 14 files
