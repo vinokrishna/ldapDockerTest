@@ -1,0 +1,6 @@
+dn: cn=config
+changetype: modify
+delete: olcConnMaxPending
+-
+add: olcConnMaxPending
+olcConnMaxPending: 10

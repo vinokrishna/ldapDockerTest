@@ -1,0 +1,86 @@
+version: "3.9"
+
+services:
+
+  dns:
+    image: python:3.11
+    container_name: rr-dns
+    volumes:
+      - ./dns_server.py:/dns_server.py
+    command: bash -c "pip install dnslib && python /dns_server.py"
+    networks:
+      labnet:
+        ipv4_address: 172.28.0.53
+
+  ldap1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ldap1
+    environment:
+      LDAP_ORGANISATION: "Test"
+      LDAP_DOMAIN: "example.com"
+      LDAP_ADMIN_PASSWORD: "admin"
+    networks:
+      labnet:
+        ipv4_address: 172.28.0.11
+
+  ldap2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ldap2
+    environment:
+      LDAP_ORGANISATION: "Test"
+      LDAP_DOMAIN: "example.com"
+      LDAP_ADMIN_PASSWORD: "admin"
+    networks:
+      labnet:
+        ipv4_address: 172.28.0.12
+
+  ldap3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ldap3
+    environment:
+      LDAP_ORGANISATION: "Test"
+      LDAP_DOMAIN: "example.com"
+      LDAP_ADMIN_PASSWORD: "admin"
+    networks:
+      labnet:
+        ipv4_address: 172.28.0.13
+
+  mongod:
+    build:
+      context: .
+      dockerfile: Dockerfile-mongo
+    container_name: mongod
+    command: ["/bin/sh", "/usr/local/bin/mongo-init.sh"]
+    dns:
+      - 172.28.0.53
+    volumes:
+      - ./mongod.conf:/etc/mongod.conf:ro
+      - ./mongo-init.sh:/usr/local/bin/mongo-init.sh:ro
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongodata:/data/db
+    networks:
+      - labnet
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - dns
+      - ldap1
+      - ldap2
+      - ldap3
+
+networks:
+  labnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+volumes:
+  mongodata:
+

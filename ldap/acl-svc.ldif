@@ -1,0 +1,4 @@
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess: {2}to dn.subtree="dc=example,dc=com" by dn.exact="cn=svc_mongoldap,ou=Service Accounts,dc=example,dc=com" read by * break

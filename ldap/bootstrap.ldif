@@ -1,0 +1,37 @@
+dn: ou=Service Accounts,dc=example,dc=com
+objectClass: organizationalUnit
+ou: Service Accounts
+
+dn: cn=svc_mongoldap,ou=Service Accounts,dc=example,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: svc_mongoldap
+sn: mongoldap
+uid: svc_mongoldap
+userPassword: querypass
+
+dn: ou=Users,dc=example,dc=com
+objectClass: organizationalUnit
+ou: Users
+
+dn: uid=testuser,ou=Users,dc=example,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: testuser
+sn: user
+uid: testuser
+userPassword: testpass
+
+dn: ou=Groups,dc=example,dc=com
+objectClass: organizationalUnit
+ou: Groups
+
+dn: cn=psmdb-readwrite,ou=Groups,dc=example,dc=com
+objectClass: groupOfNames
+cn: psmdb-readwrite
+member: uid=testuser,ou=Users,dc=example,dc=com
+
